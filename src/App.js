@@ -8,15 +8,42 @@ import SignIn from "./components/sign-in/sign-in";
 
 import './App.css';
 
-const App = () => {
-  return <div>
-    <Header />
-    <Switch>
-      <Route exact path='/' component={HomePage} />
-      <Route exact path='/shop' component={Shop}/>
-      <Route exact path='/signin' component={SignIn}/>
-    </Switch>
-  </div>;
+import {auth} from "./firebase/firebase.utils";
+
+class App extends React.Component {
+  constructor() {
+    super();
+
+    this.state = {
+      currentUser: null
+    }
+  }
+
+  unsubscribeFromAuth = null;
+
+  componentDidMount() {
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(user => {
+      this.setState({
+        currentUser: user
+      })
+      console.log(user);
+    })
+  }
+
+  componentWillUnmount() {
+    this.unsubscribeFromAuth();
+  }
+
+  render() {
+    return <div>
+      <Header currentUser={this.state.currentUser}/>
+      <Switch>
+        <Route exact path='/' component={HomePage} />
+        <Route exact path='/shop' component={Shop}/>
+        <Route exact path='/signin' component={SignIn}/>
+      </Switch>
+    </div>;
+  }
 }
 
 export default App;
