@@ -26,10 +26,7 @@ class SignUp extends React.Component {
     }
 
     try {
-      const {user} = await auth.createUserWithEmailAndPassword({
-        email,
-        password
-      });
+      const {user} = await auth.createUserWithEmailAndPassword(email, password);
 
       await createUserProfileDocument(user, {displayName});
 
@@ -44,15 +41,23 @@ class SignUp extends React.Component {
     }
   }
 
+  handleChange = event => {
+    const {value, name} = event.target;
+
+    this.setState({
+      [name]: value
+    })
+  }
+
   render() {
     const {displayName, email, password, confirmPassword} = this.state;
     return (
       <div className="sign-up">
         <h2 className="title">I do not have an account</h2>
-        <form className="sign-up-form" onClick={this.handleSubmit}>
+        <form className="sign-up-form" onSubmit={this.handleSubmit}>
         <FormInput
           name="displayName"
-          type="password"
+          type="text"
           value={displayName}
           handleChange={this.handleChange}
           label={`Display name`}
