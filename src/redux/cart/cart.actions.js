@@ -5,3 +5,10 @@ export const toogleCartHidden = () => {
     type: cartReducerTypes.TOOGLE_CART_HIDDEN
   }
 }
+
+export const addCart = (item) => {
+  return {
+    type: cartReducerTypes.ADD_CART,
+    payload: item
+  }
+}
