@@ -1,21 +1,28 @@
-import React from "react";
-import {connect} from "react-redux";
+import React from 'react';
+import {connect} from 'react-redux';
+import {withRouter} from "react-router-dom";
 
-import CustomButton from "../custom-button/custom-button";
-import CartItem from "../cart-item/cart-item";
+import CustomButton from '../custom-button/custom-button';
+import CartItem from '../cart-item/cart-item';
+import {toogleCartHidden} from '../../redux/cart/cart.actions';
 
-import "./cart-dropdown.styles.scss";
+import './cart-dropdown.styles.scss';
 
-const CartDropdown = ({cartItems}) => (
-  <div className="cart-dropdown">
-    <div className="cart-items">
+const CartDropdown = ({cartItems, history, toogleCartHidden}) => (
+  <div className='cart-dropdown'>
+    <div className='cart-items'>
       {
-        cartItems.map(cartItem => (
+        cartItems.length
+        ? cartItems.map(cartItem => (
           <CartItem key={cartItem.id} item={cartItem} />
         ))
+        : <span className="empty-message">Your cart is empty</span>
       }
     </div>
-    <CustomButton>GO TO CHECKOUT</CustomButton>
+    <CustomButton onClick={() => {
+      toogleCartHidden();
+      history.push('/checkout');
+    }}>GO TO CHECKOUT</CustomButton>
   </div>
 )
 
@@ -23,4 +30,8 @@ const mapStateToProps = (state) => ({
   cartItems: state.cart.cartItems
 })
 
-export default connect(mapStateToProps, null)(CartDropdown);
+const mapDispatchToProps = dispatch => ({
+  toogleCartHidden: () => dispatch(toogleCartHidden())
+})
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CartDropdown));
