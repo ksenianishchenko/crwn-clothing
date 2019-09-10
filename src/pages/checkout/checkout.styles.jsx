@@ -11,6 +11,10 @@ export const CheckoutPageContainer = styled.div`
     margin-left: auto;
     margin-top: 50px;
   }
+
+  @media screen and (max-width: 800px) {
+    width: 100%;
+  }
 `;
 
 export const CheckoutHeaderContainer = styled.div`
@@ -26,6 +30,10 @@ export const HeaderBlockContainer = styled.div`
   width: 23%;
   &:last-child {
     width: 8%;
+  }
+
+  @media screen and (max-width: 800px) {
+    display: none;
   }
 `;
 

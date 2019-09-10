@@ -17,6 +17,16 @@ export const CollectionItemContainer = styled.div`
       display: flex;
     }
   }
+
+  @media screen and (max-width: 800px) {
+    width: 45vw;
+    margin-bottom: 30px;
+  }
+
+  @media screen and (max-width: 480px) {
+    width: 100vw;
+    margin-bottom: 30px;
+  }
 `;
 
 export const AddButton = styled(CustomButton)`
